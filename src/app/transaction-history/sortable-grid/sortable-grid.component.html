@@ -1,0 +1,56 @@
+<form>
+    <div class="form-group form-inline">
+        <input class="form-control ml-2" type="text" name="searchTerm" placeholder="Search by typing"
+            [(ngModel)]="service.searchTerm" />
+        <span class="ml-3" *ngIf="service.loading$ | async">Loading...</span>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="category"></th>
+                <th scope="col" sortable="date" (sort)="onSort($event)">Date</th>
+                <th></th>
+                <th scope="col" sortable="beneficiary" (sort)="onSort($event)">Beneficiary</th>
+                <th scope="col" sortable="amount" (sort)="onSort($event)">Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let record of records$ | async">
+                <td [ngStyle]="{'background-color': record.categoryCode}" class="category">
+
+                </td>
+                <td>
+                    <ngb-highlight [result]="toReadableMonthAndDay(record.dates.valueDate)" [term]="service.searchTerm">
+                    </ngb-highlight>
+                </td>
+                <td>
+                    <img src="{{'assets/icons/'+record.merchant.name.toLowerCase().split(' ').join('-')+'.png'}}" fallback="assets/icons/noavailable.png"
+                        class="mr-2" style="width: 30px; height: auto;">
+                </td>
+                <td>
+
+                    <ngb-highlight [result]="record.merchant.name" [term]="service.searchTerm"></ngb-highlight>
+                    <p class="transaction-type">{{record.transaction.type}}</p>
+                </td>
+                <td>
+                    <ngb-highlight [result]="record.transaction.amountCurrency.amount | number"
+                        [term]="service.searchTerm"></ngb-highlight>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between p-2">
+        <ngb-pagination [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize">
+        </ngb-pagination>
+
+        <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize"
+            (change)="updateGrid(records$)">
+            <option [ngValue]="2">2 items per page</option>
+            <option [ngValue]="4">4 items per page</option>
+            <option [ngValue]="6">6 items per page</option>
+        </select>
+    </div>
+
+</form>
