@@ -1,6 +1,9 @@
 <div class="card">
-    <div class="card-header bank-modal-header">
-        Recent Transaction
+    <div class="card-header bank-modal-header">        
+        <div class="row">
+            <div class="col-1"><i class="fas fa-briefcase"></i></div>
+            <div class="col-10">Recent Transaction</div>
+        </div>
     </div>
     <div class="card-body">
         <app-sortable-grid [responseRecords]="transact"></app-sortable-grid>

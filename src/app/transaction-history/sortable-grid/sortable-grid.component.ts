@@ -8,7 +8,12 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { SortableDirective, SortEvent } from './../../sortable.directive';
+import {
+  SortableDirective,
+  SortEvent,
+  SortColumn,
+  SortDirection,
+} from './../../sortable.directive';
 import { RecordService } from './../transactions.service';
 import { Record } from '../transaction';
 
@@ -42,7 +47,11 @@ export class SortableGridComponent {
     this.service.sortDirection = direction;    
   }
 
-  ngOnChanges(changes: SimpleChanges): void {    
+  setDefaultSorting() {
+
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
     if (
       changes &&
       changes.responseRecords &&
@@ -54,7 +63,6 @@ export class SortableGridComponent {
     ) {
       this.service.setRecords(changes.responseRecords.currentValue);
       let transactions = this.service._search();
-      console.log(transactions);
       this.service.setSearch(transactions);
     }
   }
@@ -87,7 +95,11 @@ export class SortableGridComponent {
 
     const dateFromMillis = new Date(millis);
 
-    return monthNames[dateFromMillis.getMonth()].substr(0,3) + " "+ dateFromMillis.getDate();
+    return (
+      monthNames[dateFromMillis.getMonth()].substr(0, 3) +
+      ' ' +
+      dateFromMillis.getDate()
+    );
   }
 
   updateGrid(records) {
@@ -95,10 +107,6 @@ export class SortableGridComponent {
   }
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    this.updateGrid( this.records$);
+    this.updateGrid(this.records$);
   }
-
-  
 }

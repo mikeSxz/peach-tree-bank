@@ -60,7 +60,6 @@ export class TransactionComponent implements OnInit {
 
     this.transactionForm.get('to').setValue('');
     this.transactionForm.get('amount').setValue('');
-    
   }
 
   addNewRecord(from: string, to: string, amount: number) {
@@ -92,6 +91,10 @@ export class TransactionComponent implements OnInit {
     };
 
     this.allTransactions.push(record);
+
+    this.allTransactions.sort((a, b) => {
+      return Number(b.dates.valueDate)-Number(a.dates.valueDate);
+    });
   }
 
   sendMessage(): void {
