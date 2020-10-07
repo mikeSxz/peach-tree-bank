@@ -12,6 +12,7 @@ import { SortableDirective } from './sortable.directive';
 import { SortableGridComponent } from './transaction-history/sortable-grid/sortable-grid.component';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 import { TransactionComponent } from './transaction/transaction.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { TransactionComponent } from './transaction/transaction.component';
     SortableGridComponent,
     SortableDirective,
     FallbackImgDirective,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
